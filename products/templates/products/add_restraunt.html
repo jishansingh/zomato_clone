@@ -1,0 +1,17 @@
+{% extends 'products/base.html' %}
+{% block body %}
+<style>
+.form-control{
+    width:50%;
+}
+</style>
+<br><br><br>
+<div class="container">
+    <form action="{% url 'ProfileCreate' %}" method="post" enctype=multipart/form-data>
+        {% csrf_token %}
+        {{form.as_p}}
+        {{profile.as_p}}
+    </form>
+    <input type="submit" value="add">
+</div>
+{% endblock %}

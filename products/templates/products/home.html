@@ -1,0 +1,11 @@
+{% extends 'products/base.html' %}
+{% block body %}
+<h1>home page</h1>
+{% for c in state %}
+    {% for one in c %}
+        <a href="{% url 'restraunt_all' one %}">{{one}}</a><br>
+    {%endfor %}
+{% endfor %}
+{% endblock %}
+
+

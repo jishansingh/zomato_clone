@@ -1,0 +1,64 @@
+{% extends 'products/base.html' %}
+{% block body %}
+  <style>
+  .img-thumbnail{
+    width:100%;
+    border:2px solid grey;
+
+  }
+    .container {
+    position: relative;
+    width: 100%;
+  }
+  .container img {
+    width: 100%;
+    height: auto;
+  }
+  img{
+    width:100%;
+  }
+  .img-fluid{
+    width:100%;
+    padding-bottom:10px;  
+    size:cover;
+  }
+</style>
+<br><br><br>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Choose any course!</h1>
+      </div>
+
+  
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+    <!-- Photo Grid-->
+    {% for field in restraunt %}
+        <div class="col-lg-6 col-xs-6 thumbnail img-fluid">
+            <img src="{{field.image.url}}">
+            <h3>Delivery Time {{field.delivery_time}} min</h3>
+            <p>{{field.address}} {{field.city}},{{field.state}}</p>
+            <p>{{field.mode_of_payment}}</p>
+        <br>
+        </div>
+    {% endfor %}
+
+  
+  
+
+  <!-- Pagination -->
+  <div class="w3-center w3-padding-32">
+    <div class="w3-bar">
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">&laquo;</a>
+      <a href="#" class="w3-bar-item w3-black w3-button">1</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
+      <a href="#" class="w3-bar-item w3-button w3-hover-black">&raquo;</a>
+    </div>
+  </div>
+  
+  <hr>
+  
+  <!-- Footer -->
+{% endblock %}
