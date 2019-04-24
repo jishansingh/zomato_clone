@@ -6,12 +6,16 @@ class Review(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     text=models.TextField()
     rating=models.FloatField(default=0.0)
+    def __str__(self):
+        return self.text
 class Menu(models.Model):
     name=models.CharField(max_length=30)
     image=models.ImageField()
     description=models.TextField()
     price=models.FloatField(default=0.0)
     veg=models.BooleanField(default=False)
+    def __str__(self):
+        return self.name
 class Restraunt(models.Model):
     name=models.CharField(max_length=40)
     owner_name=models.CharField(max_length=40)
@@ -28,6 +32,8 @@ class Restraunt(models.Model):
     review=models.ManyToManyField(Review,blank=True)
     offer=models.CharField(max_length=30,blank=True)
     cuisines=models.CharField(max_length=20,blank=True)
+    def __str__(self):
+        return self.name
 
 class UserProfile(models.Model):
     image=models.ImageField()
@@ -35,11 +41,24 @@ class UserProfile(models.Model):
     city=models.CharField(max_length=20)
     state=models.CharField(max_length=20,choices=CHOICES)
     about=models.TextField()
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="user_profile")
     cart =models.ManyToManyField(Menu,blank=True)
-    fav_restraunts=models.ManyToManyField(Restraunt,blank=True)
+    fav_restraunts=models.ManyToManyField(Restraunt,blank=True,related_name="fav_restraunts")
+    customer=models.BooleanField(default=True)
+    my_restraunts=models.ManyToManyField(Restraunt,blank=True,related_name="my_restraunts")
 
 class Restraunt_owner(models.Model):
     image=models.ImageField()
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    user=models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     restraunt=models.ManyToManyField(Restraunt)
+    def __str__(self):
+        return self.user.username
+
+class new_request(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    approved=models.BooleanField(default=False)
+    def __str__(self):
+        return self.user.username
+
+
+

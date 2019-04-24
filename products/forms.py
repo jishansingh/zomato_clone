@@ -1,6 +1,6 @@
 from django import forms
 from .choices import CHOICES
-from .models import Restraunt,UserProfile
+from .models import Restraunt,UserProfile,Menu
 class AddRestraunt(forms.ModelForm):
     name=forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
     owner_name=forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
@@ -31,9 +31,15 @@ class AddRestraunt(forms.ModelForm):
 
 class CustomerForm(forms.ModelForm):
     city=forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
-    state=forms.ChoiceField(choices=[CHOICES], required=True,widget=forms.TextInput(attrs={'class' : 'form-control'}))
+    state=forms.ChoiceField(choices=CHOICES, required=True,widget=forms.TextInput(attrs={'class' : 'form-control'}))
     about=forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control',}))
     class Meta:
         model=UserProfile
         fields=('image','city','state','about','location')
-        
+
+class AddMenu(forms.ModelForm):
+    class Meta:
+        model=Menu
+        fields=('name','image','description','price','veg')
+
+

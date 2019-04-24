@@ -7,11 +7,12 @@
 </style>
 <br><br><br>
 <div class="container">
-    <form action="{% url 'ProfileCreate' %}" method="post" enctype=multipart/form-data>
+    <form method="post" action="{% url 'edit_profile' %}" enctype=multipart/form-data>
         {% csrf_token %}
         {{form.as_p}}
         {{profile.as_p}}
+        <input type="submit" value="add">
     </form>
-    <input type="submit" value="add">
+
 </div>
 {% endblock %}
