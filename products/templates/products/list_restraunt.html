@@ -26,7 +26,7 @@
 <br><br><br>
     <div class="container">
       <div class="jumbotron">
-        <h1>Choose any course!</h1>
+        <h1>my Restraunt</h1>
       </div>
 
   
@@ -43,9 +43,10 @@
         {% for menu in field.menu.all %}
             <div class="col-lg-6 col-xs-6 thumbnail img-fluid">
                 <img src="{{menu.image.url}}">
-                <h3>Delivery Time {{menu.name}} min</h3>
+                <h3>{{menu.name}}</h3>
                 <p>{{menu.description}}</p>
                 <p>price Rs {{menu.price}}</p>
+                <a href="{% url 'edit_menu' menu.id %}"><button>edit</button></a>
             </div>
         {% endfor %}
         <form method="post" action="{% url 'list_restraunt' field.id %}" enctype=multipart/form-data>

@@ -24,6 +24,7 @@
 </style>
 
 <!-- Container element -->
+<div class="container">
 <div class="parallax"></div>
 {% for field in menu %}
     <div class="box">
@@ -39,12 +40,12 @@
         <br>
         </div>
         <div class="new">
-            <button type="button" class="btn btn-success">add</button>
+            <a href="{% url 'add_to_cart' id=restraunt.id pk=field.id state=restraunt.state city=restraunt.city%}"><button type="button" class="btn btn-success">add</button></a>
         </div>
         </div>
     </div>
     </div>
     {% endfor %}
 
-
+</div>
 {% endblock %}
