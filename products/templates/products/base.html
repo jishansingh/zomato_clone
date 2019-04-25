@@ -32,14 +32,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
     <a href="{% url 'add_restraunt'%}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">add</a>
     <a href="{% url 'index'%}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">states</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">LogOut</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">{{user.username}}</a>
+    <a href="{% url 'edit_profile' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">{{user.username}}</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">ChangePassword</a>
       {% if user.user_profile.cart %}
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">{{user.user_profile.cart.objects.all.count}}</a>
       {% endif %}
       {% if not user.user_profile.customer %}
         <a href="{% url 'add_restraunt' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">add restraunt</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">edit menu</a>
+        <a href="{% url 'list_restraunt' id=0 %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">edit menu</a>
       {% endif %}
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">send request</a>
     {% else %}

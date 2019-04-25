@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,get_list_or_404
 from .models import UserProfile,Restraunt,Review,Menu,new_request
-from .forms import  AddRestraunt,CustomerForm
+from .forms import  AddRestraunt,CustomerForm,AddMenu
 from .choices import CHOICES
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login
@@ -78,38 +78,43 @@ def send_request(request):
 def edit_profile(request):
     if request.user.is_authenticated:
         if request.method=='POST':
-            form=CustomerForm(request.POST,request.FILES)
-            form.user=request.user
+            profile=request.user.user_profile
+            form=CustomerForm(request.POST,instance=profile)
             if form.is_valid():
-                form=form.save(commit=False)
                 form.save()
         form=CustomerForm(instance=request.user.user_profile)
-        profile_form=UserCreationForm(instance=request.user)
-        context={'form':form,'profile_form':profile_form}
-        return render(request,'products/add_user.html',context)
+        context={'form':form}
+        return render(request,'products/edit_profile.html',context)
     raise Http404()
 
-def list_restraunt(request):
-    if request.user.is_authenticated:
-        profile=request.user.user_profile
-        if not profile.customer:
-            my=profile.my_restraunts.all()
-            context={'restraunt':my,}
-            return render(request,'products/list_restraunt.html',context)
-    raise Http404()
-
-def edit_menu(request):
+def list_restraunt(request,id):
     if request.user.is_authenticated:
         profile=request.user.user_profile
         if not profile.customer:
             if request.method=='POST':
-                form=AddRestraunt(request.POST,request.FILES)
+                restraunt=get_object_or_404(Restraunt,id=id)
+                form=AddMenu(request.POST,request.FILES)
                 if form.is_valid():
                     form.save()
-                    profile.my_restraunts.add(form)
-                    profile.save()
-            form=AddRestraunt()
-            context={'form':form}
-            return render(request,'products/add_restraunt.html',context)
+                    restraunt.menu.add(form)
+                    restraunt.save()
+            my=profile.my_restraunts.all()
+            form=AddMenu()
+            context={'restraunt':my,'form':form}
+            return render(request,'products/list_restraunt.html',context)
+    raise Http404()
+
+def edit_menu(request,id):
+    if request.user.is_authenticated:
+        profile=request.user.user_profile
+        if not profile.customer:
+            menu=get_object_or_404(Menu,id=id)
+            if request.method=='POST':
+                form=AddRestraunt(request.POST,request.FILES,instance=menu)
+                if form.is_valid():
+                    form.save()
+            form=AddMenu(instance=menu)
+            context={'form':form,'id':id}
+            return render(request,'products/addmenu.html',context)
     raise Http404()
     
