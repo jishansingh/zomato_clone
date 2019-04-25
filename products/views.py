@@ -74,7 +74,7 @@ def send_request(request):
             new.save()
             return HttpResponse('<h1>request sent</h1>')
     raise Http404()
-    
+
 def edit_profile(request):
     if request.user.is_authenticated:
         if request.method=='POST':
@@ -87,18 +87,22 @@ def edit_profile(request):
         return render(request,'products/edit_profile.html',context)
     raise Http404()
 
-def list_restraunt(request,id):
+def list_restraunt(request,id=0):
     if request.user.is_authenticated:
         profile=request.user.user_profile
         if not profile.customer:
+            my=profile.my_restraunts.all()
             if request.method=='POST':
                 restraunt=get_object_or_404(Restraunt,id=id)
+                if restraunt in my:
+                    pass
+                else:
+                    raise Http404()
                 form=AddMenu(request.POST,request.FILES)
                 if form.is_valid():
-                    form.save()
+                    form=form.save()
                     restraunt.menu.add(form)
                     restraunt.save()
-            my=profile.my_restraunts.all()
             form=AddMenu()
             context={'restraunt':my,'form':form}
             return render(request,'products/list_restraunt.html',context)
@@ -109,12 +113,32 @@ def edit_menu(request,id):
         profile=request.user.user_profile
         if not profile.customer:
             menu=get_object_or_404(Menu,id=id)
+            my_res=profile.my_restraunts.all()
+            flag=0
+            for restraunt in my_res:
+                if menu in restraunt.menu.all():
+                    flag=1
+            if flag is 0:
+                raise Http404()
             if request.method=='POST':
-                form=AddRestraunt(request.POST,request.FILES,instance=menu)
+                form=AddMenu(request.POST,request.FILES,instance=menu)
                 if form.is_valid():
                     form.save()
+                    return redirect('list_restraunt',id=0)
             form=AddMenu(instance=menu)
             context={'form':form,'id':id}
             return render(request,'products/addmenu.html',context)
     raise Http404()
-    
+
+def add_to_cart(request,id,pk,state,city):
+    if request.user.is_authenticated:
+        restraunt=get_object_or_404(Restraunt,id=id)
+        menu=get_object_or_404(Menu,pk=pk)
+        profile=request.user.user_profile
+        cart=profile.cart
+        cart.add(menu)
+        fav=profile.fav_restraunts
+        fav.add(restraunt)
+        profile.save()
+        return redirect('restraunt_detail',state=state,city=city ,id=id)
+    raise Http404()

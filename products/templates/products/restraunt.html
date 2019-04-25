@@ -26,7 +26,7 @@
 <br><br><br>
     <div class="container">
       <div class="jumbotron">
-        <h1>Choose any course!</h1>
+        <h1>place your order</h1>
       </div>
 
   
@@ -34,13 +34,15 @@
 <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
     <!-- Photo Grid-->
     {% for field in restraunt %}
-        <div class="col-lg-6 col-xs-6 thumbnail img-fluid">
-            <img src="{{field.image.url}}">
-            <h3>Delivery Time {{field.delivery_time}} min</h3>
-            <p>{{field.address}} {{field.city}},{{field.state}}</p>
-            <p>{{field.mode_of_payment}}</p>
-        <br>
-        </div>
+      <a href="{% url 'restraunt_detail' state=field.state city=field.city id=field.id %}">
+      <div class="col-lg-6 col-xs-6 thumbnail img-fluid">
+        <img src="{{field.image.url}}">
+        <h3>Delivery Time {{field.delivery_time}} min</h3>
+        <p>{{field.address}} {{field.city}},{{field.state}}</p>
+        <p>{{field.mode_of_payment}}</p>
+      <br>
+      </div>
+      </a>
     {% endfor %}
 
   
