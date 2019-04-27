@@ -7,7 +7,7 @@ class AddRestraunt(forms.ModelForm):
     address=forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
     city=forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
     state=forms.ChoiceField(choices=CHOICES, required=True)
-    veg=forms.BooleanField(widget=forms.CheckboxInput(attrs={'id': 'fancy-checkbox-success'}))
+    veg=forms.BooleanField(widget=forms.CheckboxInput(attrs={'id': 'fancy-checkbox-success'}),required=True)
     image=forms.ImageField()
     delivery_time=forms.IntegerField()
     mode_of_payment=forms.CharField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
