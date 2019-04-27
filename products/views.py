@@ -49,7 +49,7 @@ def add_restraunt(request):
             if request.method=='POST':
                 form=AddRestraunt(request.POST,request.FILES)
                 if form.is_valid():
-                    form.save()
+                    form=form.save()
                     profile.my_restraunts.add(form)
                     profile.save()
             form=AddRestraunt()
@@ -187,6 +187,8 @@ def order_food(request,pk,id=-1):
             valet.save()
             context={'valet':valet,'orders':valet.order.all()}
             return render(request,'products/order.html',context)
+        else:
+            return HttpResponse('<h1>no delivery person is available at moment</h1>')
 def valet_register(request):
     if request.method=='POST':
         form=UserCreationForm(request.POST)
@@ -208,8 +210,6 @@ def valet_register(request):
     context={'form':form,'profile':profile_form}
     return render(request,'valet/valet_register.html',context)
 def valet_login(request):
-    if request.user.is_authenticated:
-        raise Http404()
     if request.method=='POST':
         form=LoginForm(request.POST)
         if form.is_valid():
@@ -230,6 +230,9 @@ def order_delivery(request):
 def delivered(request,pk):
     order=get_object_or_404(order_detail,id=pk)
     order.delete()
+    valet=get_object_or_404(Delivery,user=request.user)
+    valet.is_available=True
+    valet.save()
     return order_delivery(request)
 def customer_login(request):
     if request.user.is_authenticated:
@@ -246,4 +249,19 @@ def customer_login(request):
     form=LoginForm()
     context={'form':form,}
     return render(request,'products/login.html',context)
-
+def show(request):
+    if request.user.is_superuser:
+        all=new_request.objects.all().order_by('approved')
+        context={'all':all}
+        return render(request,'products/request.html',context)
+    raise Http404()
+def approve(request,id):
+    if request.user.is_superuser:
+        req=get_object_or_404(new_request,id=id)
+        req.approved=True
+        user_profile=req.user.user_profile
+        user_profile.customer=False
+        user_profile.save()
+        req.save()
+        return show(request)
+    raise Http404()

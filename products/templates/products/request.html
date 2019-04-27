@@ -1,0 +1,15 @@
+{% extends 'products/base.html' %}
+{% block body %}
+{% for menu in all %}
+    <div class="col-lg-6 col-xs-6 thumbnail img-fluid">
+        <img src="{{menu.user.image.url}}">
+        <h3>Name {{menu.user.username}}</h3>
+        <p>About: {{menu.user.user_profile.about}}</p>
+        {% if menu.approved %}
+        <p><i class="fa fa-check-circle" aria-hidden="true"></i> approved</p>
+        {% else %}
+            <a href="{% url 'approve' menu.id %}"><button type="button" class="btn btn-success">approve</button></a>
+        {% endif %}
+    </div>
+{% endfor %}
+{% endblock %}
