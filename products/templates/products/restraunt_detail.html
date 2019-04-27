@@ -14,12 +14,16 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
-.box {
+.odd {
     background-color:#EDEDED;
     width:50%;
 }
 .new{
     margin:auto;
+}
+
+.round img {
+    width: 45px;
 }
 </style>
 
@@ -27,9 +31,9 @@
 <div class="container">
 <div class="parallax"></div>
 {% for field in menu %}
-    <div class="box">
+<div class="box odd">
     <div class="row">
-        <div class="col-lg-6 col-xs-6 thumbnail img-fluid">
+        <div class="col-lg-6 col-xs-6 thumbnail img-fluid" style="float:left;">
             <img src="{{field.image.url}}">
             <h3>{{field.name}}</h3>
             <p>{{field.description}}</p>
@@ -37,15 +41,32 @@
                 <i class="fa fa-check-circle" aria-hidden="true"></i> veg
             {% endif %}
             <p>Rs {{field.price}}</p>
+        <a href="{% url 'order_food' id=restraunt.id pk=field.id %}"><button type="button" class="btn btn-success">order</button></a>
+        <a href="{% url 'add_to_cart' id=restraunt.id pk=field.id state=restraunt.state city=restraunt.city %}"><button type="button" class="btn btn-success">add to cart</button></a>
         <br>
         </div>
-        <div class="new">
-            <a href="{% url 'add_to_cart' id=restraunt.id pk=field.id state=restraunt.state city=restraunt.city%}"><button type="button" class="btn btn-success">add</button></a>
-        </div>
-        </div>
+        
     </div>
-    </div>
-    {% endfor %}
-
 </div>
+{% endfor %}
+{% for review in restraunt.review.all %}
+<div class="box ">
+<div class="thumbnail img-fluid">
+        <img src="{{review.user.user_profile.image.url}}" class="round" style="width:100px;height:100px;">
+    <h2>{{review.user.username}}</h2>
+    <p>{{review.text}}</p>
+    <p>
+    <button>{{review.rating}}</button>
+    </p>
+    <br>
+</div>
+</div>
+{% endfor %}
+<form method="post" action="{% url 'restraunt_detail' state=restraunt.state city=restraunt.city id=restraunt.id %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Post review">
+</form>
+
+
 {% endblock %}

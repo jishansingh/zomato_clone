@@ -1,0 +1,24 @@
+{% extends 'products/base.html' %}
+{% block body %}
+{% if cart %}
+    {% for field in cart %}
+    <div class="row">
+        <div class="col-lg-6 col-xs-6 thumbnail img-fluid" style="float:left;">
+            <img src="{{field.image.url}}">
+            <h3>{{field.name}}</h3>
+            <p>{{field.description}}</p>
+            {% if field.veg %}
+                <i class="fa fa-check-circle" aria-hidden="true"></i> veg
+            {% endif %}
+            <p>Rs {{field.price}}</p>
+        <a href="{% url 'order_food' pk=field.id %}"><button type="button" class="btn btn-success">order</button></a>
+        <br>
+        </div>
+    </div>
+    </a>
+    {% endfor %}
+{% else %}
+    <br><br>
+    <h1> no items in cart</h1>
+{% endif %}
+{% endblock %}

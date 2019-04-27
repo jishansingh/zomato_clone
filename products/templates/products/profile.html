@@ -1,0 +1,17 @@
+{% extends 'products/base.html' %}
+{% block body %}
+<style>
+.img-fluid{
+    width:300px;
+    height:300px;
+}
+</style>
+<div class="container">
+    <img src="{{profile.image.url}}" class="thumbnail img-fluid">
+    <h2>name {{profile.user.username}}</h2>
+    <h2>state {{profile.state}}</h2>
+    <h2>city {{profile.city}}</h2>
+    <h3>about</h3>
+    <p> {{profile.about}}</p>
+</div>
+{% endblock %}

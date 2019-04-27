@@ -1,0 +1,10 @@
+{% extends 'products/base.html' %}
+{% block body %}
+<div class="container">
+    <form method="post" action="{% url 'customer_login' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="login">
+    </form>
+</div>
+{% endblock %}

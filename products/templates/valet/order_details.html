@@ -1,0 +1,28 @@
+{% extends 'valet/base.html' %}
+{% block body %}
+<style>
+.img-fluid{
+    width:300px;
+    height:300px;
+}
+</style>
+<div class="container">
+{% for some in orders %}
+    <img src="{{some.restraunt.image.url}}" class="thumbnail img-fluid">
+    <h2>restraunt name {{some.restraunt.name}}</h2>
+    <h2>address {{some.restraunt.address}},{{some.restraunt.city}}</h2>
+    <h2>restraunt phone number {{some.restraunt.phone_number}}</h2>
+    <img src="{{some.menu.image.url}}" class="thumbnail img-fluid">
+    <h2>item to deliver {{some.menu.name}}</h2>
+    <h2>description {{some.menu.description}}</h2>
+    <h2>money to be collected {{some.menu.price}}</h2>
+    <img src="{{some.user.user_profile.image.url}}" class="thumbnail img-fluid">
+    <h3>customer name {{some.user_profile.user.username}}</h3>
+    <h3>customer contact number {{some.user_profile.phone_number}}</h3>
+    <h3>customer address {{some.user_profile.address}}</h3>
+    <a href="{% url 'delivered' some.id %}"><button>delivered</button></a>
+    <br>
+    <br>
+{% endfor %}
+</div>
+{% endblock %}
