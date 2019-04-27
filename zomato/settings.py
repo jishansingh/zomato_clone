@@ -122,4 +122,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='/media/'
 AUTH_PROFILE_MODULE = 'products.UserProfile'
+LOGOUT_REDIRECT_URL='/'
 
