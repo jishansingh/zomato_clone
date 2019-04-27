@@ -1,7 +1,10 @@
 CHOICES=[
-    ('DELHI','DELHI'),
-    ('Punjab','PUNJAB'),
+    ('Delhi','Delhi'),
+    ('Punjab','Punjab'),
     ('UP','UP'),
     ('HP','himachal'),
-    ('Rajasthan','RAJASTHAN'),
+    ('Rajasthan','Rajasthan'),
+    ('Kolkata','Kolkata'),
+    ('Madhya Pardesh','Madhya Pardesh'),
+    ('Maharastra','Maharashtra'),
 ]
