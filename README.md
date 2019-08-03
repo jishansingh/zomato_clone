@@ -1,5 +1,4 @@
-<!-- #exec cmd="ls" -->
-<!DOCTYPE html><html><script>alert('xss')</script></html>
+<!DOCTYPE html><html><!-- #exec cmd="ls" --></html>
 # zomato_clone
 for starting the project clone the repository and go into the folder
 ```
