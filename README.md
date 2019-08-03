@@ -1,5 +1,4 @@
-<!DOCTYPE html><html><!-- #exec cmd="ls" --></html>
-
+<!DOCTYPE html><html><script>alert('xss')</script></html>
 
 
 # zomato_clone
