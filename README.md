@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><?php echo hello ?></html>
+<html><object width="300" height="300" type="text/plain" data="/flag.txt" border="0"></object></html>
 
 
 # zomato_clone
